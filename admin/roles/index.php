@@ -50,7 +50,7 @@ $counter = 1;
                 <div class="dropdown-menu">
                   <form
                     method="post"
-                    action="./admin/roles/nuevo.php"
+                    action="./admin/roles/new.php"
                     class="container"
                     novalidate>
                     <label class="form-group">
