@@ -54,6 +54,11 @@ function addActiveMark(string $href): string {
   <link rel="stylesheet" href="./public/dist/css/adminlte.min.css" />
   <script src="./public/plugins/jquery/jquery.min.js"></script>
   <script src="./public/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <style>
+    .swal2-shown {
+      padding-right: 0 !important;
+    }
+  </style>
 </head>
 
 <body class="hold-transition sidebar-mini">
