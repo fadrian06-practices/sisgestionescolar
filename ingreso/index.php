@@ -38,7 +38,7 @@
         <p class="login-box-msg">
           Ingresa tus credenciales para iniciar sesión
         </p>
-        <form action="./ingreso/controller.php" method="post" novalidate>
+        <form action="./ingreso/controller.php" method="post">
           <div class="input-group mb-3">
             <input
               type="email"
