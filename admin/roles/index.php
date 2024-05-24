@@ -67,51 +67,103 @@ $roleName = $_SESSION['role.name'] ?? '';
                   </tr>
                 </thead>
                 <tbody>
-                  <?php foreach ($roles as $rol) : ?>
+                  <?php foreach ($roles as $role) : ?>
                     <tr>
-                      <td class="align-middle"><?= $rol->nombre ?></td>
                       <td class="align-middle">
-                        <?php if ($rol->activo) : ?>
-                          <span class="badge badge-success">Activo</span>
+                        <form
+                          action="./admin/roles/edit.php"
+                          method="post"
+                          novalidate
+                          id="editForm-<?= $role->id ?>"
+                          class="input-group input-group-sm d-none">
+                          <input
+                            type="hidden"
+                            name="id"
+                            required
+                            value="<?= $role->id ?>"
+                          />
+                          <input
+                            class="form-control"
+                            placeholder="Nombre del rol"
+                            name="name"
+                            value="<?= $role->nombre ?>"
+                            required
+                          />
+                          <div class="input-group-append">
+                            <button class="btn btn-outline-success">
+                              <i class="fas fa-save mr-2"></i>
+                              Actualizar
+                            </button>
+                            <button
+                              type="button"
+                              class="btn btn-outline-secondary"
+                              data-action="cancelEdit"
+                              data-parent="#editForm-<?= $role->id ?>"
+                              data-target="#roleName-<?= $role->id ?>">
+                              <i class="fas fa-ban mr-2"></i>
+                              Cancelar
+                            </button>
+                          </div>
+                        </form>
+                        <div
+                          id="roleName-<?= $role->id ?>"
+                          class="input-group input-group-sm">
+                          <input
+                            class="form-control"
+                            value="<?= $role->nombre ?>"
+                            disabled
+                            readonly
+                          />
+                          <div class="input-group-append">
+                            <button
+                              class="btn btn-outline-success"
+                              data-action="toggleEdit"
+                              data-target="#editForm-<?= $role->id ?>"
+                              data-parent="#roleName-<?= $role->id ?>">
+                              <i class="fas fa-pencil-alt mr-2"></i>
+                              Editar
+                            </button>
+                          </div>
+                        </div>
+                      </td>
+                      <td class="align-middle">
+                        <?php if ($role->activo) : ?>
+                          <span class="badge badge-success w-75">
+                            Activo
+                          </span>
                         <?php else : ?>
-                          <span class="badge badge-secondary">Inactivo</span>
+                          <span class="badge badge-secondary w-75">
+                            Inactivo
+                          </span>
                         <?php endif ?>
                       </td>
                       <td class="align-middle">
-                        <div class="btn-group btn-group-sm w-100">
-                          <a
-                            data-toggle="tooltip"
-                            title="Ver más"
-                            href="#"
-                            class="btn btn-secondary">
-                            <i class="fas fa-info-circle mr-2"></i>
-                          </a>
-                          <a
-                            data-toggle="tooltip"
-                            title="Editar"
-                            href="#"
-                            class="btn btn-outline-dark">
-                            <i class="fas fa-pencil-alt mr-2"></i>
-                          </a>
-                          <?php if ($rol->activo) : ?>
-                            <a
-                              data-toggle="tooltip"
-                              title="Desactivar"
-                              href="#"
-                              class="btn btn-danger">
-                              <i class="fas fa-lock mr-2"></i>
-                            </a>
+                        <form
+                          method="post"
+                          class="btn-group btn-group-sm rounded-lg overflow-hidden w-100">
+                          <input
+                            type="hidden"
+                            name="id"
+                            required
+                            value="<?= $role->id ?>"
+                          />
+                          <?php if ($role->activo) : ?>
+                            <button
+                              formaction="./admin/roles/disactivate.php"
+                              <?= $userLogged->rol == $role ? 'disabled' : '' ?>
+                              class="w-50 btn btn-secondary d-flex align-items-center justify-content-between">
+                              <i class="fas fa-lock" style="width: 20px"></i>
+                              <span class="flex-fill">Desactivar</span>
+                            </button>
                           <?php else : ?>
-                            <a
-                              data-toggle="tooltip"
-                              title="Activar"
-                              href="#"
-                              class="btn btn-success">
-                              <i class="fas fa-lock-open mr-2"></i>
-                              Activar
-                            </a>
+                            <button
+                              formaction="./admin/roles/activate.php"
+                              class="w-50 btn btn-success d-flex align-items-center justify-content-between">
+                              <i class="fas fa-lock-open" style="width: 20px"></i>
+                              <span class="flex-fill">Activar</span>
+                            </button>
                           <?php endif ?>
-                        </div>
+                        </form>
                       </td>
                     </tr>
                   <?php endforeach ?>
