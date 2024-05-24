@@ -61,7 +61,7 @@ function addActiveMark(string $href): string {
   </style>
 </head>
 
-<body class="hold-transition sidebar-mini">
+<body class="hold-transition sidebar-mini" style="overflow-y: scroll">
   <div class="wrapper">
     <nav class="main-header navbar navbar-expand navbar-white navbar-light">
       <ul class="navbar-nav">
