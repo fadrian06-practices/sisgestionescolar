@@ -40,6 +40,10 @@ function addActiveMark(string $href): string {
   <title><?= APP_NAME ?></title>
   <base href="<?= APP_URL ?>/" />
   <link
+    rel="icon"
+    href="https://cdn-icons-png.flaticon.com/512/5526/5526487.png"
+  />
+  <link
     rel="stylesheet"
     href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback"
   />
