@@ -12,24 +12,14 @@ unset($_SESSION['messages.success']);
 
 <script>
   <?php if ($error) : ?>
-    Swal.fire({
+    toast.fire({
       title: `<?= $error ?>`,
-      icon: 'error',
-      toast: true,
-      position: 'top-end',
-      timerProgressBar: true,
-      timer: 5000,
-      showConfirmButton: false
+      icon: 'error'
     })
   <?php elseif ($success) : ?>
-    Swal.fire({
+    toast.fire({
       title: `<?= $success ?>`,
-      icon: 'success',
-      toast: true,
-      position: 'top-end',
-      timerProgressBar: true,
-      timer: 5000,
-      showConfirmButton: false
+      icon: 'success'
     })
   <?php endif ?>
 </script>

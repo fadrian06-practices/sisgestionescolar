@@ -72,6 +72,21 @@
       </div>
     </div>
   </div>
+
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/@sweetalert2/themes@4/bootstrap-4/bootstrap-4.min.css"
+  />
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.min.js"></script>
+  <script>
+    const toast = Swal.mixin({
+      toast: true,
+      position: 'top-end',
+      showConfirmButton: false,
+      timer: 5000,
+      timerProgressBar: true
+    })
+  </script>
   <?php include __DIR__ . '/../layouts/messages.php' ?>
 </body>
 
