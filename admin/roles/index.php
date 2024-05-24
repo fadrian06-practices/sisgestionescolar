@@ -181,6 +181,27 @@ $roleName = $_SESSION['role.name'] ?? '';
   <?php if (!empty($error) && !empty($roleName)) : ?>
     $('#newRoleToggler').dropdown('show')
   <?php endif ?>
+
+  document.querySelectorAll('[data-action="toggleEdit"]').forEach($button => {
+    $button.addEventListener('click', () => {
+      $parent = document.querySelector($button.dataset.parent)
+      $target = document.querySelector($button.dataset.target)
+
+      $parent.classList.add('d-none')
+      $target.classList.remove('d-none')
+    })
+  })
+
+  document.querySelectorAll('[data-action="cancelEdit"]').forEach($button => {
+    $button.addEventListener('click', () => {
+      $parent = document.querySelector($button.dataset.parent)
+      $target = document.querySelector($button.dataset.target)
+
+      $parent.classList.add('d-none')
+      $target.classList.remove('d-none')
+    })
+  })
+
 </script>
 
 <?php include __DIR__ . '/../layouts/footer.php' ?>
