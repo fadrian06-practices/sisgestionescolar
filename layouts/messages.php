@@ -8,16 +8,6 @@ $success = $_SESSION['messages.success'] ?? '';
 unset($_SESSION['messages.error']);
 unset($_SESSION['messages.success']);
 
-if (!empty($error) || !empty($success)) {
-  echo <<<html
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/@sweetalert2/themes@4/bootstrap-4/bootstrap-4.min.css"
-    />
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.min.js"></script>
-  html;
-}
-
 ?>
 
 <script>

@@ -52,13 +52,27 @@ function addActiveMark(string $href): string {
     href="./public/plugins/fontawesome-free/css/all.min.css"
   />
   <link rel="stylesheet" href="./public/dist/css/adminlte.min.css" />
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/@sweetalert2/themes@4/bootstrap-4/bootstrap-4.min.css"
+  />
   <script src="./public/plugins/jquery/jquery.min.js"></script>
   <script src="./public/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.min.js"></script>
   <style>
     .swal2-shown {
       padding-right: 0 !important;
     }
   </style>
+  <script>
+    const toast = Swal.mixin({
+      toast: true,
+      position: 'top-end',
+      showConfirmButton: false,
+      timer: 5000,
+      timerProgressBar: true
+    })
+  </script>
 </head>
 
 <body class="hold-transition sidebar-mini" style="overflow-y: scroll">
