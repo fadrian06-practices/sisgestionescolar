@@ -129,8 +129,6 @@ $roleName = $_SESSION['role.name'] ?? '';
   <?php if (!empty($error) && !empty($roleName)) : ?>
     $('#newRoleToggler').dropdown('show')
   <?php endif ?>
-  })
-
 </script>
 
 <?php include __DIR__ . '/../layouts/footer.php' ?>
