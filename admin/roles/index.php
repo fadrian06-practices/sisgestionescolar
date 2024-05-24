@@ -10,9 +10,11 @@ $roles = $pdo
 $pdo->beginTransaction();
 
 foreach ($roles as $role) {
+  $role->canBeDeleted = $userLogged->rol->id !== $role->id;
+  $role->canBeDisabled = $userLogged->rol->id !== $role->id;
+
   try {
     $pdo->query("DELETE FROM roles WHERE id = {$role->id}");
-    $role->canBeDeleted = true;
   } catch (PDOException) {
     $role->canBeDeleted = false;
   }
@@ -162,7 +164,7 @@ $roleName = $_SESSION['role.name'] ?? '';
                           <?php if ($role->activo) : ?>
                             <button
                               formaction="./admin/roles/disactivate.php"
-                              <?= $userLogged->rol == $role ? 'disabled' : '' ?>
+                              <?= !$role->canBeDisabled ? 'disabled' : '' ?>
                               class="w-50 btn btn-secondary d-flex align-items-center justify-content-between">
                               <i class="fas fa-lock" style="width: 20px"></i>
                               <span class="flex-fill">Desactivar</span>
@@ -178,7 +180,7 @@ $roleName = $_SESSION['role.name'] ?? '';
                           <button
                             data-action="delete"
                             formaction="./admin/roles/delete.php"
-                            <?= $userLogged->rol == $role || !$role->canBeDeleted ? 'disabled' : '' ?>
+                            <?= !$role->canBeDeleted ? 'disabled' : '' ?>
                             class="btn btn-danger">
                             <i class="fas fa-trash mr-2"></i>
                             Eliminar
@@ -223,7 +225,7 @@ $roleName = $_SESSION['role.name'] ?? '';
   })
 
   document.querySelectorAll('[data-action="delete"]').forEach($button => {
-    $button.form.addEventListener('submit', async event => {
+    $button.addEventListener('click', async event => {
       event.preventDefault()
 
       if ($button.disabled) {
