@@ -58,7 +58,7 @@ $roleName = $_SESSION['role.name'] ?? '';
               </div>
             </div>
             <div class="card-body">
-              <table id="roles" class="table text-center table-sm">
+              <table class="table text-center table-sm">
                 <thead class="text-left">
                   <tr>
                     <th>Nombre</th>
