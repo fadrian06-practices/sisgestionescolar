@@ -15,8 +15,7 @@ if (!$email || !$password) {
   return header('location: ./');
 }
 
-$query = 'SELECT * FROM usuarios WHERE correo = ?';
-$stmt = $pdo->prepare($query);
+$stmt = $pdo->prepare('SELECT * FROM usuarios WHERE correo = ?');
 $stmt->execute([$email]);
 $userFound = $stmt->fetchObject();
 
@@ -26,6 +25,18 @@ if (!$userFound || !password_verify($password, $userFound->clave)) {
   return header('location: ./');
 } elseif (!$userFound->activo) {
   $_SESSION['messages.error'] = 'Este usuario se encuentra desactivado';
+
+  return header('location: ./');
+}
+
+$role = $pdo
+  ->query("SELECT * FROM roles WHERE id = {$userFound->idRol}")
+  ->fetchObject();
+
+$userFound->rol = $role;
+
+if (!$userFound->rol->activo) {
+  $_SESSION['messages.error'] = 'El rol del usuario se encuentra desactivado';
 
   return header('location: ./');
 }
