@@ -7,6 +7,18 @@ $roles = $pdo
   ->query('SELECT * FROM roles ORDER BY nombre')
   ->fetchAll(PDO::FETCH_CLASS);
 
+$pdo->beginTransaction();
+
+foreach ($roles as $role) {
+  try {
+    $pdo->query("DELETE FROM roles WHERE id = {$role->id}");
+    $role->canBeDeleted = true;
+  } catch (PDOException) {
+    $role->canBeDeleted = false;
+  }
+}
+
+$pdo->rollBack();
 
 $error = $_SESSION['messages.error'] ?? '';
 $roleName = $_SESSION['role.name'] ?? '';
@@ -163,6 +175,14 @@ $roleName = $_SESSION['role.name'] ?? '';
                               <span class="flex-fill">Activar</span>
                             </button>
                           <?php endif ?>
+                          <button
+                            data-action="delete"
+                            formaction="./admin/roles/delete.php"
+                            <?= $userLogged->rol == $role || !$role->canBeDeleted ? 'disabled' : '' ?>
+                            class="btn btn-danger">
+                            <i class="fas fa-trash mr-2"></i>
+                            Eliminar
+                          </button>
                         </form>
                       </td>
                     </tr>
@@ -202,6 +222,56 @@ $roleName = $_SESSION['role.name'] ?? '';
     })
   })
 
+  document.querySelectorAll('[data-action="delete"]').forEach($button => {
+    $button.form.addEventListener('submit', async event => {
+      event.preventDefault()
+
+      if ($button.disabled) {
+        toast.fire({
+          title: 'No puedes desactivar este rol',
+          icon: 'error',
+        })
+      }
+
+      const result = await Swal.fire({
+        title: '¿Estás seguro que deseas eliminar este rol?',
+        icon: 'question',
+        showCancelButton: true,
+        cancelButtonText: 'No',
+        confirmButtonText: 'Sí',
+        showLoaderOnConfirm: true,
+        async preConfirm() {
+          const response = await fetch($button.getAttribute('formaction'), {
+            method: 'post',
+            body: new FormData($button.form)
+          })
+
+          if (!response.ok) {
+            return {
+              icon: 'error',
+              title: await response.text()
+            }
+          }
+
+          return {
+            icon: 'success',
+            title: await response.text()
+          }
+        }
+      })
+
+      if (result.isConfirmed) {
+        if (result.value.icon === 'success') {
+          $button.closest('tr').remove()
+        }
+
+        setTimeout(() => toast.fire({
+          title: result.value.title,
+          icon: result.value.icon
+        }), 400)
+      }
+    })
+  })
 </script>
 
 <?php include __DIR__ . '/../layouts/footer.php' ?>
